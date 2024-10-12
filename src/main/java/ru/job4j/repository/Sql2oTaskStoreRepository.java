@@ -71,7 +71,8 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
         try {
             session.beginTransaction();
             session.createQuery("UPDATE Task SET done = true WHERE id = :fId")
-                            .setParameter("fId",id).executeUpdate();
+                    .setParameter("fId", id)
+                    .executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
