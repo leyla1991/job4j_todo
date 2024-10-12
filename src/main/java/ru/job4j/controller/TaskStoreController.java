@@ -22,7 +22,6 @@ public class TaskStoreController {
         return "tasks/list";
    }
 
-
    @GetMapping("/doneTask")
    public String doneTask(Model model) {
        model.addAttribute("tasks", service.findByDone());

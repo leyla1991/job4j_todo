@@ -1,10 +1,9 @@
-package ru.job4j.repository.taskStore;
+package ru.job4j.repository;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.model.Task;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
