@@ -9,12 +9,16 @@ import java.time.LocalDateTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private int id;
 
+    @NonNull
+    private String title;
     @NonNull
     private String description;
     @NonNull

@@ -42,7 +42,7 @@ public class TaskStoreController {
 
    @PostMapping("/new")
     public String newTask(@ModelAttribute Task newTask, Model model) {
-       service.save(newTask);
+       var ta = service.save(newTask);
        model.addAttribute("message", "Задание успешно сохранено");
        return "redirect:/tasks";
    }
@@ -50,10 +50,6 @@ public class TaskStoreController {
    @GetMapping("/one/{id}")
    public String findById(@PathVariable int id, Model model) {
        var task = service.findById(id);
-       if (task.isEmpty()) {
-           model.addAttribute("message", "Данного задания не существует");
-           return "errors/404";
-       }
        model.addAttribute("task", task.get());
        return "tasks/one";
    }
@@ -75,7 +71,12 @@ public class TaskStoreController {
 
    @GetMapping("/{id}/update")
    public String getUpdateTask(@PathVariable int id, Model model) {
-       model.addAttribute("task", service.findById(id));
+       var find = service.findById(id);
+       if (find.isEmpty()) {
+           model.addAttribute("message", "Задание не найдено");
+           return "errors/404";
+       }
+       model.addAttribute("task", find);
        return "tasks/update";
    }
 

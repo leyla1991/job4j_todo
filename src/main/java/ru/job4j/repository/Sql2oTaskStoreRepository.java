@@ -67,20 +67,20 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
     @Override
     public boolean changeDone(int id) {
         var session = sessionFactory.openSession();
-        boolean rsl = true;
+        int rows = 0;
         try {
             session.beginTransaction();
-            session.createQuery("UPDATE Task SET done = true WHERE id = :fId")
+            rows = session.createQuery("UPDATE Task SET done = true WHERE id = :fId")
                     .setParameter("fId", id)
                     .executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-            rsl = false;
+
         } finally {
             session.close();
         }
-        return rsl;
+        return rows > 0;
     }
 
     @Override
@@ -106,12 +106,12 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
         try {
             session.beginTransaction();
             var sql = """ 
-        UPDATE Task SET description = :fDescription, created = :fCreated, done = :fDone
+        UPDATE Task SET title = :fTitle, description = :fDescription, done = :fDone
         WHERE id = :fId
         """;
             rsl = session.createQuery(sql)
+                    .setParameter("fTitle", task.getTitle())
                     .setParameter("fDescription", task.getDescription())
-                    .setParameter("fCreated", task.getCreated())
                     .setParameter("fDone", task.isDone())
                     .setParameter("fId", task.getId())
                     .executeUpdate();
