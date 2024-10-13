@@ -1,4 +1,4 @@
-package ru.job4j.service;
+package ru.job4j.service.task;
 
 import ru.job4j.model.Task;
 

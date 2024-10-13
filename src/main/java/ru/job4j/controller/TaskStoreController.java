@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.model.Task;
-import ru.job4j.service.TaskStoreService;
+import ru.job4j.service.task.TaskStoreService;
 
 @Controller
 @RequestMapping("/tasks")

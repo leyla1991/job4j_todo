@@ -97,5 +97,18 @@ http://localhost:8080/tasks
 - __Удалить__ - при нажатии задание удаляется
 
 
+__Страница регистрации__
 
 
+![](screenshots/register_page.png)
+
+
+__Страница входа в личный кабинет__
+
+
+![](screenshots/login_page.png)
+
+
+__Ошибка регистрации__
+
+![](screenshots/errors.png)

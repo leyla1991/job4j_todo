@@ -1,9 +1,9 @@
-package ru.job4j.service;
+package ru.job4j.service.task;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.model.Task;
-import ru.job4j.repository.TaskStoreRepository;
+import ru.job4j.repository.task.TaskStoreRepository;
 
 import java.util.Collection;
 import java.util.Optional;

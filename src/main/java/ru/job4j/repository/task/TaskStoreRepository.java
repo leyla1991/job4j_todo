@@ -1,4 +1,4 @@
-package ru.job4j.repository;
+package ru.job4j.repository.task;
 
 import ru.job4j.model.Task;
 
