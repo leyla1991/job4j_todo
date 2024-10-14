@@ -24,7 +24,7 @@ public class Sql2oUserRepository implements UserRepository {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
-            return Optional.ofNullable(user);
+            return Optional.of(user);
         } catch (HibernateException e) {
             LOG.error(e.getMessage(), e);
             session.getTransaction().rollback();
