@@ -49,18 +49,17 @@ public class TaskStoreController {
 
    @GetMapping("/one/{id}")
    public String findById(@PathVariable int id, Model model) {
-       var task = service.findById(id);
-       model.addAttribute("task", task.get());
-       return "tasks/one";
-   }
-
-   @GetMapping("/{id}/delete")
-    public String deleteTask(@PathVariable int id, Model model) {
        var taskOptional = service.findById(id);
        if (taskOptional.isEmpty()) {
            model.addAttribute("message", "Такого задания не существует");
            return "errors/404";
        }
+       model.addAttribute("task", taskOptional.get());
+       return "tasks/one";
+   }
+
+   @GetMapping("/{id}/delete")
+    public String deleteTask(@PathVariable int id, Model model) {
        var del = service.deleteTask(id);
        if (!del) {
            model.addAttribute("message", "Не удалось удалить задачу");
