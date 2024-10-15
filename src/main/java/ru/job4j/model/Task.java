@@ -25,4 +25,9 @@ public class Task {
     private LocalDateTime created = LocalDateTime.now().withNano(0);
     @NonNull
     private boolean done;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @NonNull
+    private User user;
 }

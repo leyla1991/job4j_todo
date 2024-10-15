@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "users")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
@@ -16,11 +16,9 @@ public class User {
     @EqualsAndHashCode.Include
     private int id;
 
-    @NonNull
+
     private String fullName;
-    @NonNull
     @EqualsAndHashCode.Include
     private String email;
-    @NonNull
     private String password;
 }

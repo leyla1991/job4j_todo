@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.model.Task;
+import ru.job4j.model.User;
 import ru.job4j.service.task.TaskStoreService;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/tasks")
@@ -41,9 +43,11 @@ public class TaskStoreController {
    }
 
    @PostMapping("/new")
-    public String newTask(@ModelAttribute Task newTask, Model model) {
-       var ta = service.save(newTask);
-       model.addAttribute("message", "Задание успешно сохранено");
+    public String newTask(@ModelAttribute Task newTask, HttpSession session, Model model) {
+       User user = (User) session.getAttribute("user");
+       newTask.setUser(user);
+       System.out.println(newTask);
+       service.save(newTask);
        return "redirect:/tasks";
    }
 
@@ -80,7 +84,9 @@ public class TaskStoreController {
    }
 
    @PostMapping("/update")
-    public String updateTask(@ModelAttribute Task task, Model model) {
+    public String updateTask(@ModelAttribute Task task, HttpSession session, Model model) {
+       User user = (User) session.getAttribute("user");
+       task.setUser(user);
        var isUpdate = service.update(task);
        if (!isUpdate) {
            model.addAttribute("message", "Задача не обновилась, попробуйте еще раз");

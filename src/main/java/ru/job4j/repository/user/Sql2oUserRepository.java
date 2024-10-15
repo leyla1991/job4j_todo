@@ -28,8 +28,9 @@ public class Sql2oUserRepository implements UserRepository {
             return Optional.of(user);
         } catch (Exception e) {
             LOG.error(e.getMessage());
+            return Optional.empty();
         }
-        return Optional.empty();
+
     }
 
     @Override
@@ -39,7 +40,8 @@ public class Sql2oUserRepository implements UserRepository {
                     User.class, Map.of("fEmail", email, "fPassword", password));
         } catch (Exception e) {
             LOG.error(e.getMessage());
+            return Optional.empty();
         }
-        return Optional.empty();
+
     }
 }
