@@ -1,12 +1,9 @@
 package ru.job4j.repository.user;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.job4j.Main;
 import ru.job4j.model.User;
 import ru.job4j.repository.crud.CrudRepository;
 
@@ -28,9 +25,8 @@ public class Sql2oUserRepository implements UserRepository {
             return Optional.of(user);
         } catch (Exception e) {
             LOG.error(e.getMessage());
-            return Optional.empty();
         }
-
+        return Optional.empty();
     }
 
     @Override
@@ -40,8 +36,7 @@ public class Sql2oUserRepository implements UserRepository {
                     User.class, Map.of("fEmail", email, "fPassword", password));
         } catch (Exception e) {
             LOG.error(e.getMessage());
-            return Optional.empty();
         }
-
+        return Optional.empty();
     }
 }

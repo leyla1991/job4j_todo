@@ -43,7 +43,7 @@ public class TaskStoreController {
    }
 
    @PostMapping("/new")
-    public String newTask(@ModelAttribute Task newTask, HttpSession session, Model model) {
+    public String newTask(@ModelAttribute Task newTask, HttpSession session) {
        User user = (User) session.getAttribute("user");
        newTask.setUser(user);
        System.out.println(newTask);
@@ -84,9 +84,7 @@ public class TaskStoreController {
    }
 
    @PostMapping("/update")
-    public String updateTask(@ModelAttribute Task task, HttpSession session, Model model) {
-       User user = (User) session.getAttribute("user");
-       task.setUser(user);
+    public String updateTask(@ModelAttribute Task task, Model model) {
        var isUpdate = service.update(task);
        if (!isUpdate) {
            model.addAttribute("message", "Задача не обновилась, попробуйте еще раз");
