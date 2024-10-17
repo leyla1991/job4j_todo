@@ -46,7 +46,6 @@ public class TaskStoreController {
     public String newTask(@ModelAttribute Task newTask, HttpSession session) {
        User user = (User) session.getAttribute("user");
        newTask.setUser(user);
-       System.out.println(newTask);
        service.save(newTask);
        return "redirect:/tasks";
    }
