@@ -3,6 +3,7 @@ package ru.job4j.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.model.Priority;
 import ru.job4j.model.Task;
 import ru.job4j.model.User;
 import ru.job4j.service.task.TaskStoreService;
@@ -45,7 +46,9 @@ public class TaskStoreController {
    @PostMapping("/new")
     public String newTask(@ModelAttribute Task newTask, HttpSession session) {
        User user = (User) session.getAttribute("user");
+       Priority priority = (Priority) session.getAttribute("priority");
        newTask.setUser(user);
+       newTask.setPriority(priority);
        service.save(newTask);
        return "redirect:/tasks";
    }

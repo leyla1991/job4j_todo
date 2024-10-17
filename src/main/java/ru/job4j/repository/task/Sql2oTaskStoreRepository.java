@@ -26,7 +26,7 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
     @Override
     public Optional<Task> findById(int id) {
         return crudRepository.optional(
-                "FROM Task as i WHERE i.id = :fId", Task.class,
+                "FROM Task as i JOIN FETCH i.priority WHERE i.id = :fId ", Task.class,
                 Map.of("fId", id)
         );
     }
@@ -34,7 +34,7 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
     @Override
     public Collection<Task> findByDone() {
         return crudRepository.query(
-                "FROM Task as i WHERE i.done = true", Task.class);
+                "FROM Task as i JOIN FETCH i.priority WHERE i.done = true ", Task.class);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
     @Override
     public Collection<Task> findByNewTask() {
         return crudRepository.query(
-                "FROM Task as i WHERE i.done = false", Task.class
+                "FROM Task as i JOIN FETCH i.priority WHERE i.done = false", Task.class
         );
     }
 
@@ -82,7 +82,7 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
     @Override
     public Collection<Task> findAll() {
         return crudRepository.query(
-                "from Task", Task.class
+                "from Task f JOIN FETCH f.priority", Task.class
         );
     }
 }
