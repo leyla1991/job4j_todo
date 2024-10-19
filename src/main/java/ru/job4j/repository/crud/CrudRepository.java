@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 @Repository
 @AllArgsConstructor
@@ -66,6 +67,18 @@ public class CrudRepository {
             return sq.list();
         };
         return tx(command);
+    }
+
+    public boolean query(String query, Map<String, Object> args) {
+       Predicate<Session> command = session -> {
+           var sq = session
+                   .createQuery(query);
+           for (Map.Entry<String, Object> arg : args.entrySet()) {
+               sq.setParameter(arg.getKey(), arg.getValue());
+        }
+            return sq.executeUpdate() > 0;
+        };
+        return tx(command::test);
     }
 
     public <T> T tx(Function<Session, T> command) {

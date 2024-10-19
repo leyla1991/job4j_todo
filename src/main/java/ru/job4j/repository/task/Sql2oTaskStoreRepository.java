@@ -61,8 +61,12 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
 
     @Override
     public boolean update(Task task) {
-        crudRepository.run(session -> session.merge(task));
-        return true;
+           return crudRepository.query("UPDATE FROM Task SET title = :fTitle, description = :fDescription, priority = :fPriority WHERE id = :fId",
+                    Map.of("fTitle", task.getTitle(),
+                            "fDescription", task.getDescription(),
+                            "fPriority", task.getPriority(),
+                            "fId", task.getId())
+           );
     }
 
     @Override

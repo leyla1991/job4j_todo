@@ -3,9 +3,9 @@ package ru.job4j.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.model.Priority;
 import ru.job4j.model.Task;
 import ru.job4j.model.User;
+import ru.job4j.service.priority.PriorityService;
 import ru.job4j.service.task.TaskStoreService;
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +14,11 @@ import javax.servlet.http.HttpSession;
 public class TaskStoreController {
 
    private final TaskStoreService service;
+   private final PriorityService priorityService;
 
-   public TaskStoreController(TaskStoreService service) {
-        this.service = service;
+   public TaskStoreController(TaskStoreService service, PriorityService priorityService) {
+       this.service = service;
+       this.priorityService = priorityService;
    }
 
    @GetMapping
@@ -40,15 +42,14 @@ public class TaskStoreController {
    @GetMapping("/new")
    public String getNewTask(Model model) {
        model.addAttribute("task", service.findAll());
+       model.addAttribute("priorities", priorityService.findAll());
        return "tasks/new";
    }
 
    @PostMapping("/new")
     public String newTask(@ModelAttribute Task newTask, HttpSession session) {
        User user = (User) session.getAttribute("user");
-       Priority priority = (Priority) session.getAttribute("priority");
        newTask.setUser(user);
-       newTask.setPriority(priority);
        service.save(newTask);
        return "redirect:/tasks";
    }
@@ -82,6 +83,7 @@ public class TaskStoreController {
            return "errors/404";
        }
        model.addAttribute("task", find);
+       model.addAttribute("priorities", priorityService.findAll());
        return "tasks/update";
    }
 
@@ -92,7 +94,6 @@ public class TaskStoreController {
            model.addAttribute("message", "Задача не обновилась, попробуйте еще раз");
            return "errors/404";
        }
-
        return "redirect:/tasks";
    }
 

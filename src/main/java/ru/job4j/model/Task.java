@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tasks")
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Task {
@@ -17,18 +17,13 @@ public class Task {
     @EqualsAndHashCode.Include
     private int id;
 
-    @NonNull
     private String title;
-    @NonNull
     private String description;
-    @NonNull
     private LocalDateTime created = LocalDateTime.now().withNano(0);
-    @NonNull
     private boolean done;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NonNull
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
