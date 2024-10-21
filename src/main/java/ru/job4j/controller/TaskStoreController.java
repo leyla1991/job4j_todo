@@ -5,9 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.model.Task;
 import ru.job4j.model.User;
+import ru.job4j.service.category.CategoryService;
 import ru.job4j.service.priority.PriorityService;
 import ru.job4j.service.task.TaskStoreService;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tasks")
@@ -15,10 +18,14 @@ public class TaskStoreController {
 
    private final TaskStoreService service;
    private final PriorityService priorityService;
+   private final CategoryService categoryService;
 
-   public TaskStoreController(TaskStoreService service, PriorityService priorityService) {
+   public TaskStoreController(TaskStoreService service,
+                              PriorityService priorityService,
+                              CategoryService categoryService) {
        this.service = service;
        this.priorityService = priorityService;
+       this.categoryService = categoryService;
    }
 
    @GetMapping
@@ -43,13 +50,16 @@ public class TaskStoreController {
    public String getNewTask(Model model) {
        model.addAttribute("task", service.findAll());
        model.addAttribute("priorities", priorityService.findAll());
+       model.addAttribute("categories", categoryService.findAll());
        return "tasks/new";
    }
 
    @PostMapping("/new")
-    public String newTask(@ModelAttribute Task newTask, HttpSession session) {
+    public String newTask(@ModelAttribute Task newTask, HttpSession session,
+                          @RequestParam(required = false) List<Integer> categoriesId) {
        User user = (User) session.getAttribute("user");
        newTask.setUser(user);
+       newTask.setCategories(new ArrayList<>(categoryService.getAllFindById(categoriesId)));
        service.save(newTask);
        return "redirect:/tasks";
    }
@@ -84,6 +94,7 @@ public class TaskStoreController {
        }
        model.addAttribute("task", find);
        model.addAttribute("priorities", priorityService.findAll());
+       model.addAttribute("categories", categoryService.findAll());
        return "tasks/update";
    }
 

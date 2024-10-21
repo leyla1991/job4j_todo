@@ -1,0 +1,1 @@
+ALTER TABLE tasks RENAME COLUMN category_id TO categories_id;

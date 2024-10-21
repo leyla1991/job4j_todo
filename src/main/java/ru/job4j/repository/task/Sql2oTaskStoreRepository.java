@@ -86,7 +86,7 @@ public class Sql2oTaskStoreRepository implements TaskStoreRepository {
     @Override
     public Collection<Task> findAll() {
         return crudRepository.query(
-                "from Task f JOIN FETCH f.priority", Task.class
+                "SELECT DISTINCT f FROM Task f JOIN FETCH f.priority JOIN FETCH f.categories ORDER BY f.id ASC", Task.class
         );
     }
 }
