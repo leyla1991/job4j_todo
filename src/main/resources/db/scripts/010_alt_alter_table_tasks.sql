@@ -1,1 +1,1 @@
-ALTER TABLE tasks RENAME COLUMN category_id TO categories_id;
+ALTER TABLE tasks ADD COLUMN categories_id INT REFERENCES categories(id);
