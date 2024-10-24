@@ -46,12 +46,14 @@
                         </select>
                         </div>
                         <div  class="row mb-3">
+                            <div class="col-2 col-md-auto">
                             <label for="category"><b>Категория задачи</b></label>
                             <select class="form-control" id="category" name="categoriesId" multiple="multiple" required>
                                 <option th:each="category, row : ${categories}" th:value="${category.id}"
                                         th:text="${category.name}">
                                 </option>
                             </select>
+                            </div>
                         </div>
                     </div>
             <div class="row">

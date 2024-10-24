@@ -8,6 +8,8 @@ import ru.job4j.model.User;
 import ru.job4j.service.category.CategoryService;
 import ru.job4j.service.priority.PriorityService;
 import ru.job4j.service.task.TaskStoreService;
+import ru.job4j.utility.ConverterDate;
+
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,12 @@ public class TaskStoreController {
    }
 
    @GetMapping
-   public String allTask(Model model) {
-        model.addAttribute("tasks", service.findAll());
-        return "tasks/list";
+   public String allTask(Model model, HttpSession session) {
+       User user = (User) session.getAttribute("user");
+       var tasks = service.findAll();
+       ConverterDate.convertTime(tasks, user);
+       model.addAttribute("tasks", tasks);
+       return "tasks/list";
    }
 
    @GetMapping("/doneTask")

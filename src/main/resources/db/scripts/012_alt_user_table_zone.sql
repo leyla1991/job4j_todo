@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN user_zone varchar(225) not null;

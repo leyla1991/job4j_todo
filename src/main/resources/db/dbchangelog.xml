@@ -16,4 +16,6 @@
     <include file="scripts/009_dml_insert_categories.sql" relativeToChangelogFile="true"/>
     <include file="scripts/010_alt_alter_table_tasks.sql" relativeToChangelogFile="true"/>
     <include file="scripts/011_create_table_jointly.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/012_alt_user_table_zone.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/013_alt_task_created.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
